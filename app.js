@@ -1,19 +1,36 @@
-function Stopwatch {
-  let startTime, endTime, running, duration = 0;
+function Stopwatch() {
+  let startTime,
+    endTime,
+    running,
+    duration = 0;
 
-// start
-this.start = function() {
+  // start
+  this.start = function () {
+    if (running) throw new Error("Stopwatch has already started.");
+    running = true;
+    startTime = new Date();
+  };
+  // stop
+  this.stop = function () {
+    if (!running) throw new Error("Stopwatch is not started.");
 
-}
-// stop
-this.stop = function() {
+    running = false;
+    endTime = new Date();
 
-}
-// duration
-this.duration = function() {
-  
-}
+    const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
+    duration += seconds;
+  };
 
-// reset
+  // reset
+  this.reset = function () {
+    startTime, (endTime = null);
+    running = false;
+    duration = 0;
+  };
 
+  Object.defineProperty(this, "duration", {
+    get: function () {
+      return duration;
+    },
+  });
 }
